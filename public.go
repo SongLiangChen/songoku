@@ -2,7 +2,15 @@ package songoku
 
 import (
 	"errors"
+	"sync/atomic"
 )
+
+var pid int32
+
+func init() {
+	pid = 0
+	pid = atomic.LoadInt32(&pid)
+}
 
 type MqttMsg struct {
 	Topic   string
@@ -47,4 +55,8 @@ func deCodeLen(l []byte) (int, int, error) {
 		i++
 	}
 	return x, i + 1, nil
+}
+
+func GetPid() int {
+	return int(atomic.AddInt32(&pid, 1))
 }
