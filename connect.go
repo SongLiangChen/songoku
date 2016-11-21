@@ -116,7 +116,7 @@ func (c *Client) Connect(address string) error {
 	}
 
 	// the entire Payload encode finish
-	// -------------------------------------------------------------
+	// --------------------------------------------------------------
 
 	l = variableheader.Len() + payload.Len()
 	ll := encodeLen(l)
