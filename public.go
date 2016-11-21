@@ -58,5 +58,8 @@ func deCodeLen(l []byte) (int, int, error) {
 }
 
 func GetPid() int {
+	if pid == 10000000 {
+		pid = 0
+	}
 	return int(atomic.AddInt32(&pid, 1))
 }

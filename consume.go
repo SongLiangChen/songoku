@@ -38,7 +38,7 @@ func (c *Client) Consume() {
 			packet_type = tmp[0]
 			if n, j, err = deCodeLen(tmp[1:]); err == nil {
 				if tmplen-j-1 < n {
-					continue
+					break
 				}
 
 				t := make([]byte, n)
