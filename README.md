@@ -17,7 +17,7 @@ func main() {
 	client := songoku.NewMqttClient()
 
 	client.HandPublish(func(msg *songoku.MqttMsg) {
-		fmt.Printf("%v\n", *msg)
+		fmt.Printf("rec new msg: %v\n", *msg)
 	})
 
 	if err := client.Connect("127.0.0.1:1883"); err != nil {
