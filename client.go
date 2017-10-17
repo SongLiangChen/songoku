@@ -19,7 +19,7 @@ type onunsubackfunc func()
 type onpingrespfunc func()
 
 type Client struct {
-	ID           string // the Client Identifier, cannot be nil
+	ID           string // the Client Identifier, cannot be nil, and should be unique
 	Keepalive    int    // idle time, when timeout, disconnect from server
 	WillRetain   bool   // "will retain" flag, it must be false unless "WillFlag == true"
 	WillQos      int    // "will qos" flag, it must be zero unless "WillFlag == frue"
@@ -73,30 +73,37 @@ func NewMqttClient() *Client {
 	}
 }
 
+// Will be callback when mqtt msg publish success
 func (c *Client) HandPublish(fn func(msg *MqttMsg)) {
 	c.onPublish = fn
 }
 
+// Will be callback when mqtt client connect to broker success
 func (c *Client) HandConnack(fn func()) {
 	c.onConnack = fn
 }
 
-func (c *Client) HadPuback(fn func()) {
+// A PUBACK Packet is the response to a PUBLISH Packet with QoS level 1.
+func (c *Client) HandPuback(fn func()) {
 	c.onPubAck = fn
 }
 
+// A PUBREC Packet is the response to a PUBLISH Packet with QoS 2. It is the second packet of the QoS 2 protocol exchange.
 func (c *Client) HandPubrec(fn func(pid []byte)) {
 	c.onPubRec = fn
 }
 
+// A PUBREL Packet is the response to a PUBREC Packet. It is the third packet of the QoS 2 protocol exchange.
 func (c *Client) HandPubrel(fn func(pid []byte)) {
 	c.onPubRel = fn
 }
 
+// The PUBCOMP Packet is the response to a PUBREL Packet. It is the fourth and final packet of the QoS 2 protocol exchange.
 func (c *Client) HandPubcomp(fn func(pid []byte)) {
 	c.onPubComp = fn
 }
 
+// Will be callback when subscribe topic success
 func (c *Client) HandSuback(fn func()) {
 	c.onSubAck = fn
 }
