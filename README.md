@@ -52,7 +52,6 @@ func TestPublish() {
 	client.Publish(&songoku.MqttMsg{
 		Topic:   "topicA",
 		Content: "hello",
-		Pid:     1,
 		Qos:     0,
 	})
 
