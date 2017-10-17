@@ -1,5 +1,5 @@
 # songoku
-the mqtt client by go
+the mqtt client by go.
 
 demo:
 ```
